@@ -8,18 +8,24 @@ class AutomatedWeb:
 
 # Initialize the class with browser opening
 #------------------------------------------------------------------------------------------------------------------
-    def __init__(self, debug=None):
+    def __init__(self, simulatePage=None, debug=None):
     
         self.m_browser = mechanize.Browser()
         self.m_currentPage = None
         self.m_currentPageData = None
         self.m_debug = debug
+        self.m_simulatePage = simulatePage
+
+        if self.m_simulatePage:
+            f = open(self.m_simulatePage, "r")
+            self.m_currentPageData = f.read()
+            f.close()
 
 # Execute a GET command in a given URL (navigate to this url)
 #------------------------------------------------------------------------------------------------------------------
     def executeGet(self, url):
         
-        self.logDebug('Executando GET na url: %s'%(url)) 
+        self.logDebug('Executando GET na url: %s'%(url))
         self.m_currentPage = self.m_browser.open(url)
         self.m_currentPageData = self.m_currentPage.read()
 

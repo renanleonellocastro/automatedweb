@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-import mechanize
+import requests
 import pyquery
-import urllib
+import json
 
 class AutomatedWeb:
 
@@ -10,7 +10,7 @@ class AutomatedWeb:
 #------------------------------------------------------------------------------------------------------------------
     def __init__(self, simulatePage=None, debug=None):
     
-        self.m_browser = mechanize.Browser()
+        self.m_browser = requests.Session()
         self.m_currentPage = None
         self.m_currentPageData = None
         self.m_debug = debug
@@ -26,17 +26,19 @@ class AutomatedWeb:
     def executeGet(self, url):
         
         self.logDebug('Executando GET na url: %s'%(url))
-        self.m_currentPage = self.m_browser.open(url)
-        self.m_currentPageData = self.m_currentPage.read()
+        self.m_currentPage = self.m_browser.get(url)
+        self.m_currentPageData = str(self.m_currentPage.content)
 
-# Execute a POST command in a given URL and with a given dictionary ()
+# Execute a POST command in a given URL and with a given dictionary
 #------------------------------------------------------------------------------------------------------------------
-    def executePost(self, url, data):
+    def executePost(self, url, data, convertToJson=False):
     
-        self.logDebug('Executando POST na url: %s'%(url)) 
-        encodedData = urllib.urlencode(data)   
-        self.m_currentPage = self.m_browser.open(url, encodedData)
-        self.m_currentPageData = self.m_currentPage.read()
+        if convertToJson:
+            data = json.dumps(data)
+
+        self.logDebug('Executando POST na url: %s'%(url))
+        self.m_currentPage = self.m_browser.post(url, data=data)
+        self.m_currentPageData = str(self.m_currentPage.content)
 
 # Return web page contents
 #------------------------------------------------------------------------------------------------------------------
@@ -44,6 +46,13 @@ class AutomatedWeb:
     
         self.logDebug('Retornando pagina atual.') 
         return self.m_currentPageData
+
+# Print web page contents
+#------------------------------------------------------------------------------------------------------------------
+    def printCurrentPage(self):
+ 
+        self.logDebug('Imprimindo pagina atual.')
+        print self.m_currentPageData
 
 # Return specific html text
 #------------------------------------------------------------------------------------------------------------------

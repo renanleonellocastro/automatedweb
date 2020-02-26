@@ -31,13 +31,16 @@ class AutomatedWeb:
 
 # Execute a POST command in a given URL and with a given dictionary
 #------------------------------------------------------------------------------------------------------------------
-    def executePost(self, url, data, convertToJson=False):
+    def executePost(self, url, data="", convertToJson=False, headers=None):
     
         if convertToJson:
             data = json.dumps(data)
 
         self.logDebug('Executando POST na url: %s'%(url))
-        self.m_currentPage = self.m_browser.post(url, data=data)
+        if (headers):
+            self.m_currentPage = self.m_browser.post(url, data=data, headers=headers)
+        else:
+            self.m_currentPage = self.m_browser.post(url, data)
         self.m_currentPageData = str(self.m_currentPage.content)
 
 # Return web page contents

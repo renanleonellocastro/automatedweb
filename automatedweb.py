@@ -75,6 +75,22 @@ class AutomatedWeb:
     
         return data
 
+# Return specific html text
+#------------------------------------------------------------------------------------------------------------------
+    def getValueFromPage(self, jquerySelector, lineNumber=None):
+    
+        self.logDebug('Obtendo dados da pagina atual.') 
+        pageData = self.m_currentPageData
+        pageSelection = pyquery.PyQuery(pageData)
+        data = None
+
+        if lineNumber:
+            data = pageSelection(jquerySelector).eq(lineNumber).val()
+        else:
+            data = pageSelection(jquerySelector).val()
+
+        return data
+
 # Generate debug log
 #------------------------------------------------------------------------------------------------------------------
     def logDebug(self, string):

@@ -26,7 +26,7 @@ class AutomatedWeb:
     def executeGet(self, url):
         
         self.logDebug('Executando GET na url: %s'%(url))
-        self.m_currentPage = self.m_browser.get(url)
+        self.m_currentPage = self.m_browser.get(url, verify=False)
         self.m_currentPageData = str(self.m_currentPage.content)
 
 # Execute a POST command in a given URL and with a given dictionary

@@ -5,3 +5,4 @@ To use this tool, it is necessary to install the following packages:
  - Python 2
  - Python Requests
  - Python PyQuery
+ - Python Urllib3

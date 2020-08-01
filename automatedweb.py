@@ -2,6 +2,7 @@
 
 import requests
 import pyquery
+import urllib3
 import json
 
 class AutomatedWeb:
@@ -10,6 +11,7 @@ class AutomatedWeb:
 #------------------------------------------------------------------------------------------------------------------
     def __init__(self, simulatePage=None, debug=None):
     
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         self.m_browser = requests.Session()
         self.m_currentPage = None
         self.m_currentPageData = None

@@ -58,7 +58,7 @@ class AutomatedWeb:
     def printCurrentPage(self):
  
         self.logDebug('Imprimindo pagina atual.')
-        print self.m_currentPageData
+        print (self.m_currentPageData)
 
 # Return specific html text
 #------------------------------------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ class AutomatedWeb:
 
         return data
 
-# Return children of a selection
+# Return children values of a selection
 #------------------------------------------------------------------------------------------------------------------
     def getOptionsValuesFromSelection(self, selectionId):
     
@@ -105,11 +105,28 @@ class AutomatedWeb:
             option_values_list.append(pyquery.PyQuery(option).val())
         return option_values_list
 
+# Return text from each element of a table
+#------------------------------------------------------------------------------------------------------------------
+    def getTextFromEachElementOfTable(self, tableId):
+    
+        self.logDebug('Obtendo o texto de cada item na tabela.') 
+        items = []
+        pageData = self.m_currentPageData
+        pageSelection = pyquery.PyQuery(pageData)
+        table = pageSelection('#' + tableId)
+        rows = pyquery.PyQuery(table.children()[0])('tbody').children()
+        for row in rows:
+            col = []
+            for item in pyquery.PyQuery(row).children():
+                col.append(pyquery.PyQuery(item).text())
+            items.append(col)
+        return items
+
 # Generate debug log
 #------------------------------------------------------------------------------------------------------------------
     def logDebug(self, string):
     
         if self.m_debug:
-            print string
+            print (string)
 
 #------------------------------------------------------------------------------------------------------------------

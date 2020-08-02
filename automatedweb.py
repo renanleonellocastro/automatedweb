@@ -13,6 +13,7 @@ class AutomatedWeb:
     
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         self.m_browser = requests.Session()
+        self.m_browser.trust_env = False
         self.m_currentPage = None
         self.m_currentPageData = None
         self.m_debug = debug
@@ -75,11 +76,11 @@ class AutomatedWeb:
     
         return data
 
-# Return specific html text
+# Return specific html value
 #------------------------------------------------------------------------------------------------------------------
     def getValueFromPage(self, jquerySelector, lineNumber=None):
     
-        self.logDebug('Obtendo dados da pagina atual.') 
+        self.logDebug('Obtendo valores da pagina atual.') 
         pageData = self.m_currentPageData
         pageSelection = pyquery.PyQuery(pageData)
         data = None
@@ -90,6 +91,19 @@ class AutomatedWeb:
             data = pageSelection(jquerySelector).val()
 
         return data
+
+# Return children of a selection
+#------------------------------------------------------------------------------------------------------------------
+    def getOptionsValuesFromSelection(self, selectionId):
+    
+        self.logDebug('Obtendo as opcoes da selecao atual.') 
+        pageData = self.m_currentPageData
+        pageSelection = pyquery.PyQuery(pageData)
+        options = pageSelection('#' + selectionId).children()
+        option_values_list = []
+        for option in options:
+            option_values_list.append(pyquery.PyQuery(option).val())
+        return option_values_list
 
 # Generate debug log
 #------------------------------------------------------------------------------------------------------------------

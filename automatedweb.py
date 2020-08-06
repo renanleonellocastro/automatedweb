@@ -107,14 +107,14 @@ class AutomatedWeb:
 
 # Return text from each element of a table
 #------------------------------------------------------------------------------------------------------------------
-    def getTextFromEachElementOfTable(self, tableId):
+    def getTextFromEachElementOfTable(self, tableId, position):
     
         self.logDebug('Obtendo o texto de cada item na tabela.') 
         items = []
         pageData = self.m_currentPageData
         pageSelection = pyquery.PyQuery(pageData)
         table = pageSelection('#' + tableId)
-        rows = pyquery.PyQuery(table.children()[0])('tbody').children()
+        rows = pyquery.PyQuery(table.children()[position])('tbody').children()
         for row in rows:
             col = []
             for item in pyquery.PyQuery(row).children():

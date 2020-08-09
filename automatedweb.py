@@ -114,13 +114,16 @@ class AutomatedWeb:
         pageData = self.m_currentPageData
         pageSelection = pyquery.PyQuery(pageData)
         table = pageSelection('#' + tableId)
-        rows = pyquery.PyQuery(table.children()[position])('tbody').children()
-        for row in rows:
-            col = []
-            for item in pyquery.PyQuery(row).children():
-                col.append(pyquery.PyQuery(item).text())
-            items.append(col)
-        return items
+        try:
+            rows = pyquery.PyQuery(table.children()[position])('tbody').children()
+            for row in rows:
+                col = []
+                for item in pyquery.PyQuery(row).children():
+                    col.append(pyquery.PyQuery(item).text())
+                items.append(col)
+            return items
+        except:
+            return []
 
 # Generate debug log
 #------------------------------------------------------------------------------------------------------------------

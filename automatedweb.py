@@ -41,9 +41,9 @@ class AutomatedWeb:
 
         self.logDebug('Executando POST na url: %s'%(url))
         if (headers):
-            self.m_currentPage = self.m_browser.post(url, data=data, headers=headers)
+            self.m_currentPage = self.m_browser.post(url, data=data, headers=headers, verify=False)
         else:
-            self.m_currentPage = self.m_browser.post(url, data)
+            self.m_currentPage = self.m_browser.post(url, data, verify=False)
         self.m_currentPageData = str(self.m_currentPage.content)
 
 # Return web page contents

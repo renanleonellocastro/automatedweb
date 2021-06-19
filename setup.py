@@ -6,7 +6,7 @@ with open("README.md", "r") as readme:
 
 setuptools.setup(
     name='automatedweb',
-    version='1.0.1',
+    version='1.0.2',
     url='https://github.com/renanleonellocastro/automatedweb.git',
     license='MIT License',
     author='Renan Leonello Castro',
